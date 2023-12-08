@@ -49,14 +49,18 @@ dispatch(reset)
     },[user, isLoading, isError,  isSuccess, message])
     if(isLoading){
         return(
-            <Typography variant='h4'>Loading...</Typography>
+            <Typography variant='h4' color="white">Loading...</Typography>
         )
     }
     
   return (
-  <Container sx={{ display:"flex", alignItems:"center", justifyContent:"end", bgcolor:"white", height:"50%", width:"40%", opacity:"90%", borderRadius:"15px"}}>
-     <Box onSubmit={handleSubmit} sx={{width:"100%"}} > <form action="submit">
-        <Typography variant="h5" align="center" gutterBottom>
+  <Box className="box" sx={{ display:"flex", alignItems:"center", justifyContent:"end", borderRadius:"5px", }} >
+   
+   
+     <Box  className="login" onSubmit={handleSubmit} sx={{width:"100%",  padding:"15px", border: '1px solid grey',
+      boxShadow:"2px 5px 39px 0px rgba(0,0,0,0.75)"}} > <form action="submit">
+        
+        <Typography className='login-text' variant="h3" align="center" sx={{fontFamily:"philosofer"}} gutterBottom>
         Sign-up
       </Typography>
     <TextField
@@ -65,7 +69,12 @@ dispatch(reset)
       value={name}
       onChange={handleChange}
       fullWidth
+      variant="filled"
       required
+      InputProps={{ style: { color: 'white' } }}
+      InputLabelProps={{
+        style: { color: 'white' },
+      }}
       
     />
     <TextField
@@ -74,7 +83,12 @@ dispatch(reset)
       value={email}
       onChange={handleChange}
       fullWidth
+      variant="filled"
       required
+      InputProps={{ style: { color: 'white' } }}
+      InputLabelProps={{
+        style: { color: 'white' },
+      }}
       type="email"
       sx={{marginTop:"15px"}}
     />
@@ -86,7 +100,12 @@ dispatch(reset)
       onChange={handleChange}
       fullWidth
       autoComplete='password'
+      variant="filled"
       required
+      InputProps={{ style: { color: 'white' } }}
+      InputLabelProps={{
+        style: { color: 'white' },
+      }}
       sx={{marginTop:"15px"}}
     />
     <TextField
@@ -96,7 +115,12 @@ dispatch(reset)
       value={confirmPassword}
       onChange={handleChange}
       fullWidth
+      variant="filled"
       required
+      InputProps={{ style: { color: 'white' } }}
+      InputLabelProps={{
+        style: { color: 'white' },
+      }}
       autoComplete='confirm-password'
       sx={{marginTop:"15px"}}
     />
@@ -105,7 +129,9 @@ dispatch(reset)
     </Button> </form>
     <ToastContainer/>
   </Box>
-  </Container>
+  </Box>
+  
+
   );
 }
 

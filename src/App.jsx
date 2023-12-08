@@ -9,7 +9,7 @@ const App = () => {
   return (
    <>
    <Router>
-    <div className="container1">
+    <div className="container1 ">
    <Navbar/>
    <Box sx={{ display:"flex", flexDirection:"column", alignItems:"center", justifyContent:"center", height:"100%"}}>
    <Routes>
