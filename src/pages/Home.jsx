@@ -15,19 +15,22 @@ if(!user){
 }
 },[user, isLoading, isSuccess, isError, message])
 
-
+if(isLoading){
+  <Typography>
+    loading...
+  </Typography>
+}
   return (
     <Container>
     <Grid container spacing={4} style={{ marginTop: '20px' }}>
       <Grid item xs={12}>
         <Paper style={{ padding: '20px', textAlign: 'center',backgroundColor:"gray",color:"white" }}>
           <Typography  gutterBottom sx={{display:"flex",justifyContent:"center"}}>
-           Hello 
-           <Typography variant='h4' sx={{marginLeft:"10px"}}>
+           <Typography  sx={{marginLeft:"10px", fontSize:"30px"}}>
             Hello
             </Typography>
-            <Typography variant='h4' sx={{marginLeft:"10px"}}>
-            
+            <Typography sx={{marginLeft:"10px", fontSize:"30px"}}>
+            {user?user.name:"hello"}
             </Typography>
           </Typography>
           <Typography variant="subtitle1" paragraph>
