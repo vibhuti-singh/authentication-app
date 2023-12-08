@@ -6,7 +6,6 @@ import { Button, Container, Grid, Paper, Typography } from '@mui/material';
 
 
 const Home = () => {
-  const dispatch = useDispatch()
     const navigate = useNavigate()
     const{user, isLoading, isSuccess, isError, message}= useSelector(state => state.auth)
 useEffect(()=>{
