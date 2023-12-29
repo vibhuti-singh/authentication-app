@@ -59,12 +59,12 @@ builder.addCase(loginUser.fulfilled, (state, action)=>{
     state.user=action.payload
     state.message=""
 })
-builder.addCase(loginUser.rejected,(state)=>{
+builder.addCase(loginUser.rejected,(state,action)=>{
     state.isLoading=false
     state.isSuccess=false
     state.isError=true
     state.user = null
-    state.message="user not found"
+    state.message=action.payload
 })
     }
 })
@@ -78,10 +78,12 @@ export const registerUser = createAsyncThunk("REGISTER/USER", async(formData, th
     return thunkAPI.rejectWithValue(message)
    }
 })
-export const loginUser = createAsyncThunk("LOGIN/USER", async(formData)=>{try {
+export const loginUser = createAsyncThunk("LOGIN/USER", async(formData)=>{
+    try {
     return await authService.login(formData)
 } catch (error) {
-    console.log(error)
+    const message = error.response.data.message
+    return thunkAPI.rejectWithValue(message)
 }
 })
 

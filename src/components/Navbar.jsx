@@ -11,8 +11,8 @@ const handleLogout = ()=>{
 dispatch(logoutuser())
 }
     return (
-      <AppBar>
-        <Toolbar>
+      <AppBar className='nav-bar'>
+        <Toolbar className='nav-bar'>
           <Typography variant="h6" sx={{ flexGrow: 1 }}>
             Authentication app
           </Typography>
@@ -20,14 +20,7 @@ dispatch(logoutuser())
             !user ? (
                 <>
                
-          <Link to={"/signup"}><Button variant='contained' color='secondary' sx={{marginRight:"10px"}}>
-            Sign-up
-          </Button>
-          </Link>
-         <Link to={'/login'}>
-         <Button variant='contained' color='secondary' sx={{marginRight:"10px"}}>
-            Login
-          </Button></Link>
+          
                 </>
             ):(
              <>

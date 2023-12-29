@@ -1,9 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import { TextField, Button, Paper, Typography, Container } from '@mui/material';
-import { useDispatch, useSelector } from 'react-redux';
-import { loginUser } from '../features/auth/authSlice';
-import { useNavigate } from 'react-router-dom';
+import { TextField, Button, Card, CardContent, Typography, CssBaseline, Box, LinearProgress,} from '@mui/material';
 
+import Stack from '@mui/material/Stack';
+import { useDispatch, useSelector } from 'react-redux';
+import { loginUser, reset } from '../features/auth/authSlice';
+import { useNavigate, Link } from 'react-router-dom';
+import { toast} from 'react-toastify';
+import sound from "../assets/s.mp3"
 const Login = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -13,7 +16,9 @@ const Login = () => {
     email: '',
     password: '',
   });
+
   const { email, password } = formData;
+  const [audio] = useState(new Audio(sound)); 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({
@@ -26,78 +31,98 @@ const Login = () => {
     e.preventDefault();
     dispatch(loginUser(formData));
   };
+  
+useEffect(() => {
 
-  useEffect(() => {
-    if (user || isSuccess) {
-      navigate('/');
+  if ( isError || message) {
+    if (isError && message) {
+      toast.error("Please enter correct email and password");
+    } else {
+      toast.error("Something went wrong");
     }
-  }, [user, isError, isLoading, isSuccess, message]);
+   
+    dispatch(reset());
+    return; 
+  }
+
+  if (user && isSuccess) {
+    navigate("/");
+  }
+}, [user, isLoading, isError, isSuccess, message, dispatch, navigate]);
+const playClickSound = () => {
+  audio.currentTime = 0;
+  audio.play();
+};
+if(isLoading){
+  return(
+     <Box className='error-container'>
+      <Typography className='loading-text' variant='h3'>Loading....</Typography>
+      <Stack sx={{ width: '100%', color: 'grey.500' }} spacing={2}>
+      <LinearProgress color="error" />
+     
+    </Stack>
+     </Box>
+  )
+}
 
   return (
-    <Container maxWidth="xs">
-      <Paper
-        className="login"
-        elevation={3}
-        style={{
-          padding: 20,
-          marginTop: 40,
-          border: '1px solid grey',
-      boxShadow:"2px 5px 39px 0px rgba(0,0,0,0.75)"
-        }}
-      >
-        <Typography
-          className="login-text"
-          variant="h2"
-          align="center"
-          style={{ fontFamily: 'Philosopher' ,}}
-        >
-          Login
-        </Typography>
-
-        <form onSubmit={handleSubmit}>
-          <TextField
-            label="Email"
-            name="email"
-            value={email}
-            onChange={handleChange}
-            fullWidth
-            variant="filled"
-            required
-            InputProps={{ style: { color: 'white' } }}
-            InputLabelProps={{
-              style: { color: 'white' },
-            }}
-          style={{ marginTop: '10px' }}
-          />
-          <TextField
-            label="Password"
-            name="password"
-            type="password"
-            value={password}
-            variant="filled"
-            autoComplete="password"
-            InputProps={{ style: { color: 'white' } }}
-            InputLabelProps={{
-              style: { color: 'white' },
-            }}
-            onChange={handleChange}
-            fullWidth
-            required
-           
-            style={{ marginTop: '10px' }}
-          />
-          <Button
-            type="submit"
-            variant="contained"
-            color="primary"
-            fullWidth
-            style={{ marginTop: 20 }}
-          >
+    <Box component="main" className='containers'>
+      <CssBaseline />
+      <Card className='cards'>
+        <CardContent>
+          <Typography variant="h4" component="div" gutterBottom className='fadeInUp login-text'>
             Log In
-          </Button>
-        </form>
-      </Paper>
-    </Container>
+          </Typography>
+          <form onSubmit={handleSubmit} style={{ marginTop: 20 }}>
+            <TextField
+              label="Email"
+              name="email"
+              value={email}
+              onChange={handleChange}
+              fullWidth
+              variant="outlined"
+              margin="normal"
+              required
+              onClick={()=>{
+                playClickSound()
+              }}
+              InputProps={{ style: { backgroundColor: '#fff' } }}
+            />
+            <TextField
+              label="Password"
+              name="password"
+              type="password"
+              value={password}
+              variant="outlined"
+              margin="normal"
+              autoComplete="password"
+              onChange={handleChange}
+              fullWidth
+              required
+              onClick={()=>{
+                playClickSound()
+              }}
+              InputProps={{ style: { backgroundColor: '#fff' } }}
+            />
+            <Button
+              type="submit"
+              variant="contained"
+              fullWidth
+              size="large"
+              className='fadeIn buttons'
+              onClick={()=>{
+                playClickSound()
+              }}
+            >
+              Log In
+            </Button>
+          </form>
+          <Typography variant="body2" style={{ marginTop: 20, color: '#fff' }} className='fadeIn'>
+            Don't have an account? <Link to={"/signup"} style={{ color: '#e3e3e3', fontWeight: 'bold' }}>Sign up</Link>
+          </Typography>
+        </CardContent>
+      </Card>
+    </Box>
   );
 };
 

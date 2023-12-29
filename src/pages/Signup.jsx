@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import { TextField, Button, Typography, Box, Container } from '@mui/material';
+import { TextField, Button, Typography, Box, LinearProgress } from '@mui/material';
+import Stack from '@mui/material/Stack';
 import { useDispatch, useSelector } from 'react-redux';
 import { registerUser, reset } from '../features/auth/authSlice';
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-import { useNavigate } from 'react-router-dom';
+import sound from "../assets/s.mp3"
+import { toast} from 'react-toastify';
+import { Link, useNavigate } from 'react-router-dom';
 
 const Signup = () => {
 const navigate=useNavigate()
@@ -20,6 +21,7 @@ const navigate=useNavigate()
     const {name, email, password, confirmPassword}= formData;
       
     
+  const [audio] = useState(new Audio(sound)); 
       const handleChange = (e) => {
         const { name, value } = e.target;
         setFormData({
@@ -39,26 +41,37 @@ const navigate=useNavigate()
        
       };
     useEffect(()=>{
-if(user || isSuccess){
-navigate("/")
-}
+
 if(isError|| message){
     toast.error(message)
 }
+if(user || isSuccess){
+  navigate("/")
+  }
 dispatch(reset)
     },[user, isLoading, isError,  isSuccess, message])
-    if(isLoading){
-        return(
-            <Typography variant='h4' color="white">Loading...</Typography>
-        )
-    }
     
+    const playClickSound = () => {
+      audio.currentTime = 0;
+      audio.play();
+    };
+    if(isLoading){
+      return(
+         <Box className='error-container'>
+          <Typography className='loading-text' variant='h3'>Loading....</Typography>
+          <Stack sx={{ width: '100%', color: 'grey.500' }} spacing={2}>
+          <LinearProgress color="error" />
+         
+        </Stack>
+         </Box>
+      )
+    }
   return (
-  <Box className="box" sx={{ display:"flex", alignItems:"center", justifyContent:"end", borderRadius:"5px", }} >
+  <Box className="containers" >
    
    
-     <Box  className="login" onSubmit={handleSubmit} sx={{width:"100%",  padding:"15px", border: '1px solid grey',
-      boxShadow:"2px 5px 39px 0px rgba(0,0,0,0.75)"}} > <form action="submit">
+     <Box  className="cards" onSubmit={handleSubmit} sx={{width:"50%",  padding:"15px", 
+      }} > <form action="submit">
         
         <Typography className='login-text' variant="h3" align="center" sx={{fontFamily:"philosofer"}} gutterBottom>
         Sign-up
@@ -69,13 +82,9 @@ dispatch(reset)
       value={name}
       onChange={handleChange}
       fullWidth
-      variant="filled"
-      required
-      InputProps={{ style: { color: 'white' } }}
-      InputLabelProps={{
-        style: { color: 'white' },
-      }}
-      
+      variant="outlined"
+      required  
+      InputProps={{ style: { backgroundColor: '#fff' } }}
     />
     <TextField
       label="Email"
@@ -83,14 +92,12 @@ dispatch(reset)
       value={email}
       onChange={handleChange}
       fullWidth
-      variant="filled"
+      variant="outlined"
       required
-      InputProps={{ style: { color: 'white' } }}
-      InputLabelProps={{
-        style: { color: 'white' },
-      }}
       type="email"
       sx={{marginTop:"15px"}}
+      
+      InputProps={{ style: { backgroundColor: '#fff' } }}
     />
     <TextField
       label="Password"
@@ -100,12 +107,10 @@ dispatch(reset)
       onChange={handleChange}
       fullWidth
       autoComplete='password'
-      variant="filled"
+      variant="outlined"
       required
-      InputProps={{ style: { color: 'white' } }}
-      InputLabelProps={{
-        style: { color: 'white' },
-      }}
+      
+      InputProps={{ style: { backgroundColor: '#fff' } }}
       sx={{marginTop:"15px"}}
     />
     <TextField
@@ -115,19 +120,21 @@ dispatch(reset)
       value={confirmPassword}
       onChange={handleChange}
       fullWidth
-      variant="filled"
+      variant="outlined"
       required
-      InputProps={{ style: { color: 'white' } }}
-      InputLabelProps={{
-        style: { color: 'white' },
-      }}
       autoComplete='confirm-password'
+      InputProps={{ style: { backgroundColor: '#fff' } }}
       sx={{marginTop:"15px"}}
     />
-    <Button sx={{marginTop:"15px"}} type="submit" variant="contained" color="primary">
+    <Button className='buttons' sx={{marginTop:"15px"}} type="submit" variant="contained" fullWidth style={{ marginTop: 20, fontWeight: 'bold' }} onClick={()=>{
+                playClickSound()
+              }}>
       Sign Up
     </Button> </form>
-    <ToastContainer/>
+    <Typography variant="body2" style={{ marginTop: 20, color: '#fff' }} className='fadeIn'>
+            Alredy have an account? <Link to={"/login"} style={{ color: '#e3e3e3', fontWeight: 'bold' }}>LogIn</Link>
+          </Typography>
+   
   </Box>
   </Box>
   

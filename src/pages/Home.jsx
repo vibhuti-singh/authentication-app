@@ -2,7 +2,7 @@
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
-import { Button, Container, Grid, Paper, Typography } from '@mui/material';
+import { Box, Button, Grid, Paper, Typography } from '@mui/material';
 
 
 const Home = () => {
@@ -20,8 +20,8 @@ if(isLoading){
   </Typography>
 }
   return (
-    <Container>
-    <Grid container spacing={4} style={{ marginTop: '20px' }}>
+    <Box className="container-home">
+    <Grid container spacing={4} style={{ marginTop: '40px' }}>
       <Grid item xs={12}>
         <Paper style={{ padding: '20px', textAlign: 'center',backgroundColor:"gray",color:"white" }}>
           <Typography  gutterBottom sx={{display:"flex",justifyContent:"center"}}>
@@ -64,7 +64,7 @@ if(isLoading){
         </Paper>
       </Grid>
     </Grid>
-  </Container>
+  </Box>
   );
 }
   

@@ -4,6 +4,8 @@ import Home from './pages/Home'
 import { Box } from '@mui/material'
 import Signup from './pages/Signup'
 import Login from './pages/Login'
+import { ToastContainer} from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 const App = () => {
   return (
@@ -18,7 +20,9 @@ const App = () => {
   <Route path='/login' element={<Login/>}/>
   
    </Routes>
-   </Box></div>
+   </Box>
+   <ToastContainer/>
+   </div>
    </Router>
      </>
   )
